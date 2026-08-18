@@ -62,3 +62,11 @@ We decided to build our own password manager that aims at preserving your privac
 - The app must feature keyboard shortcuts for frequently used features such as saving the changes made to the vault or copying the password of an entry.
 - Actions that delete an entry must ask for confirmation beforehand.
 - The browser extension should prompt the user for the master password if the _vault_ is locked.
+
+## Architecture
+
+### Software architecture
+
+### Mail alias infrastructure
+
+## Mockups
