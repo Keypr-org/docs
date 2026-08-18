@@ -133,4 +133,4 @@ flowchart LR
 
 ## Mockups
 
-Mockups of our application are located in the `/mockups` directory. There is also a README file showing the color palette used in the mockups and examples of the mockups.
+Mockups of our application are available in the `/mockups` directory. Click ![here](./mockups/README.md) to see them.
