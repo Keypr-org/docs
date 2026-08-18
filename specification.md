@@ -70,3 +70,5 @@ We decided to build our own password manager that aims at preserving your privac
 ### Mail alias infrastructure
 
 ## Mockups
+
+Mockups of our application are located in the `/mockups` directory. There is also a README file showing the color palette used in the mockups and examples of the mockups.
