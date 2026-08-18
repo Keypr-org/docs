@@ -24,14 +24,19 @@ We decided to build our own password manager that aims at preserving your privac
 
 ### Security
 
-- The _vault_ are stored in a single encrypted file on disk.
+- The _vaults_ are stored in a single encrypted file on disk.
 - The entries are stored in a secure _vault_ which is a special file containing the encrypted entries.
 - The password generator must generate uniformly random passwords
 - The vault must store only encrypted data and follow the chosen file specification
 - The vault data must be encrypted using a secure and well known cipher (E.g.: AES-256)
-- The provided synchronisation solution must transfer password between devices securely using up to date secure protocols
+- The cipher key must be derived from the master password using suitable function such as Argon2id, scrypt or PBKDF2 with a unique salt for each _vault_.
+- The master password must never be stored even temporarily in plain text.
+- Copied content should be automatically removed from the clipboard after 30 seconds.
 - The vault locks itself after 5 minutes.
 - The vault must be unlocked for the browser extension to suggest passwords.
+- The unlocking process of the _vault_ must feature a protection against brute-force attacks such as adding a delay between each try.
+- The communication between the application and the browser extension must be authenticated.
+- The browser extension must never receive the entire vault but only the required entry.
 
 ### Performance
 
