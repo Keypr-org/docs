@@ -67,6 +67,47 @@ We decided to build our own password manager that aims at preserving your privac
 
 ### Software architecture
 
+```mermaid
+flowchart LR
+    Browser["Web Browser"]
+
+    subgraph Extension["Chrome Extension"]
+        ContentScript["Content Script"]
+        ServiceWorker["Extension Service Worker"]
+    end
+
+
+    NativeHost["Native Messaging Host"]
+
+    subgraph Desktop["Qt Desktop Application"]
+        GUI["Qt GUI"]
+        Controller["Vault Controller"]
+        Session["Vault Session"]
+        IPC["Local IPC Server"]
+    end
+
+    subgraph Storage["Vault Storage Layer"]
+        Repository["Vault Repository"]
+        Format["Vault Format Parser / Serializer"]
+        Crypto["Crypto Service"]
+        VaultFile[("Encrypted Vault File")]
+    end
+
+    Browser <--> ContentScript
+    ContentScript <--> ServiceWorker
+    ServiceWorker <--> NativeHost
+    NativeHost <--> IPC
+
+    GUI --> Controller
+    IPC --> Controller
+    Controller --> Session
+    Controller --> Repository
+
+    Repository --> Format
+    Repository --> Crypto
+    Repository --> VaultFile
+```
+
 ### Mail alias infrastructure
 
 ## Mockups
