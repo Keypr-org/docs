@@ -110,6 +110,27 @@ flowchart LR
 
 ### Mail alias infrastructure
 
+```mermaid
+flowchart LR
+    Client["Password Manager Client"]
+
+    subgraph Server["Aliasing Server"]
+        API["Alias API"]
+        Mail["Mail Forwarder"]
+        Database[("Alias Database")]
+    end
+
+    Sender["External Sender"]
+    Inbox["User's Real Inbox"]
+
+    Client --> API
+    API --> Database
+
+    Sender --> Mail
+    Mail --> Database
+    Mail --> Inbox
+```
+
 ## Mockups
 
 Mockups of our application are located in the `/mockups` directory. There is also a README file showing the color palette used in the mockups and examples of the mockups.
