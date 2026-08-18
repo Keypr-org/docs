@@ -7,29 +7,19 @@ We've used Figma to create the mockups. Mockups are located inside the `app` dir
 ## Color Palette
 
 Here's the color palette used in the mockups:
-- Primary Color: #1F2937 (Dark Blue)
+- Primary Color: #1F2937 (Dark Blue) <span style="color: #1F2937; width: 100%; height: 20px;">■</span>
 
-<div style="background-color: #1F2937; width: 100%; height: 20px;"></div>
+- Background Color: #0F0F0B (Black) <span style="color: #0F0F0B; width: 100%; height: 20px;">■</span>
 
-- Background Color: #0F0F0B (Black)
+- Accent Color: #A91EE4 (Purple) <span style="color: #A91EE4; width: 100%; height: 20px;">■</span>
 
-<div style="background-color: #0F0F0B; width: 100%; height: 20px;"></div>
+- Text Color: #F3F4F6 (White) <span style="color: #F3F4F6; width: 100%; height: 20px;">■</span>
 
-- Accent Color: #A91EE4 (Purple)
+- Secondary Text Color: #9CA3AF (Gray) <span style="color: #9CA3AF; width: 100%; height: 20px;">■</span>
 
-<div style="background-color: #A91EE4; width: 100%; height: 20px;"></div>
+- Error Color: #EF4444 (Red) <span style="color: #EF4444; width: 100%; height: 20px;">■</span>
 
-- Text Color: #F3F4F6 (White)
-<div style="background-color: #F3F4F6; width: 100%; height: 20px;"></div>
-
-- Secondary Text Color: #9CA3AF (Gray)
-<div style="background-color: #9CA3AF; width: 100%; height: 20px;"></div>
-
-- Error Color: #EF4444 (Red)
-<div style="background-color: #EF4444; width: 100%; height: 20px;"></div>
-
-- Success Color: #10B981 (Green)
-<div style="background-color: #10B981; width: 100%; height: 20px;"></div>
+- Success Color: #10B981 (Green) <span style="color: #10B981; width: 100%; height: 20px;">■</span>
 
 ## Examples
 
