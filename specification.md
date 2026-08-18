@@ -133,4 +133,4 @@ flowchart LR
 
 ## Mockups
 
-Mockups of our application are available in the `/mockups` directory. Click ![here](./mockups/README.md) to see them.
+Mockups of our application are available in the `/mockups` directory. Click [here](./mockups/README.md) to see them.
