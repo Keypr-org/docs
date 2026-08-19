@@ -79,14 +79,14 @@ flowchart LR
 
     NativeHost["Native Messaging Host"]
 
-    subgraph Desktop["Qt Desktop Application"]
+    subgraph Desktop["Qt Client"]
         GUI["Qt GUI"]
         Controller["Vault Controller"]
         Session["Vault Session"]
         IPC["Local IPC Server"]
     end
 
-    subgraph Storage["Vault Storage Layer"]
+    subgraph Storage["Core"]
         Repository["Vault Repository"]
         Format["Vault Format Parser / Serializer"]
         Crypto["Crypto Service"]
