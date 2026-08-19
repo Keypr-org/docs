@@ -490,7 +490,7 @@
 
 ---
 
-## Epic 10 — Vault Encryption and Storage
+## Vault Encryption and Storage
 
 ### Encrypt vault data
 
@@ -538,7 +538,7 @@
 
 ---
 
-## Epic 11 — Reliability
+## Reliability
 
 ### Save changes atomically
 
@@ -584,9 +584,9 @@
 
 ---
 
-## Epic 13 — Cross-Platform Application
+## Cross-Platform Application
 
-### Use the application on Linux
+### Use the application on Linux, macOS, and Windows
 
 **As a** Linux user, macOS user, or Windows user, 
 **I want** to install and use the application on my operating system,  
@@ -602,7 +602,7 @@
 
 ---
 
-## Epic 15 — User Experience
+## User Experience
 
 ### Use keyboard shortcuts
 
@@ -619,7 +619,7 @@
 
 ---
 
-## Epic 16 — Performance
+## Performance
 
 ### Decrypt the vault quickly
 
@@ -649,7 +649,7 @@
 
 ---
 
-## Epic 17 — Email Alias Infrastructure
+## Email Alias Infrastructure
 
 ### Request an alias from the server
 
@@ -697,7 +697,7 @@
 
 ---
 
-## Epic 18 — Development and Quality
+## Development and Quality
 
 ### Run automated tests
 
