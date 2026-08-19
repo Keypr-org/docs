@@ -10,7 +10,7 @@ We decided to build our own password manager that aims at preserving your privac
 
 - The user can store entries that can be website credentials (username, password, url, ...), wifi credentials or credit card informations.
 - The user can create a fake character called a _persona_ to avoid giving its real identity to third party.
-- The user can create an email alias for a _persona_ that will redirect all emails sent to this alias to his email address while preventing him from giving out its real email.
+- The user can create an email alias that will redirect all emails sent to this alias to his email address while preventing him from giving out its real email.
 - The user can associate a persona to an entry
 - The user must enter its _master password_ to decrypt a given vault (each vault can have its own master password to decrypt it).
 - The user can have multiple vaults
