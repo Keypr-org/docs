@@ -37,7 +37,7 @@ Here's the color palette used in the mockups:
 
 ### Unlocked vault details mockup
 
-![Unlocked vault details mockup](./app/unlocked-vault-detail.svg)
+![Unlocked vault details mockup](./app/unlocked-vault-detail-website.svg)
 
 ---
 
