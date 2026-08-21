@@ -34,9 +34,9 @@ Here's the structure of the header:
 | --------------- | --------------- | --------------- |
 | 0 | 8 | Magic bytes to identify file type: "KVLT2026" |
 | 8 | 4 | Format version |
-| 12 | 32 | Argon2 KDF salt |
-| 44 | 8 | Argon 2 Operations limit |
-| 52 | 8 | Argon 2 Memory limit in bytes |
+| 12 | 32 | Argon2d KDF salt |
+| 44 | 8 | Argon2d Operations limit |
+| 52 | 8 | Argon2d Memory limit in bytes |
 
 ## Vault JSON document structure
 
@@ -56,17 +56,14 @@ The JSON containing the entries has the following structure:
     {
       "id": "cat-websites",
       "name": "Website",
-      "builtin": true
     },
     {
       "id": "cat-wifi",
       "name": "Wi-Fi",
-      "builtin": true
     },
     {
       "id": "cat-credit-cards",
       "name": "Credit card",
-      "builtin": true
     }
   ],
   "entries": [],
@@ -180,11 +177,9 @@ Aliases are stored within individual entries, they have the following structure:
 {
   "id": "01JALIAS...",
   "address": "shop-abc@example-alias.com",
-  "status": "active",
   "entryId": "01JWEBSITE...",
   "createdAt": "2026-08-20T14:02:00Z",
   "updatedAt": "2026-08-20T14:02:00Z",
-  "disabledAt": null,
   "provider": {
     "name": "ExampleAliasService",
     "remoteId": "alias-provider-id"
