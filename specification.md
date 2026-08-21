@@ -1,5 +1,26 @@
 # Project Specification
 
+## Table of contents
+
+- [Project Specification](#project-specification)
+  - [Table of contents](#table-of-contents)
+  - [Objective](#objective)
+  - [Functional requirements](#functional-requirements)
+  - [Non-functional requirements](#non-functional-requirements)
+    - [Security](#security)
+    - [Performance](#performance)
+    - [Reliability](#reliability)
+    - [Compatibility](#compatibility)
+    - [Usability](#usability)
+  - [Architecture](#architecture)
+    - [Software architecture](#software-architecture)
+    - [Mail alias infrastructure](#mail-alias-infrastructure)
+  - [Mockups](#mockups)
+  - [Technical stack](#technical-stack)
+    - [Desktop application](#desktop-application)
+    - [Browser extension](#browser-extension)
+    - [Core library](#core-library)
+
 ## Objective
 
 Securely storing passwords has never been more important than today as many platforms require a long and difficult to guess password which are also hard for humans to remember. That's why a password manager is a must-have today. Additionally, as the number of data breaches increases it has never been more important to limit the amount of personal data you share to third parties as they often don't need to know your real informations.
@@ -134,3 +155,32 @@ flowchart LR
 ## Mockups
 
 Mockups of our application are available in the `/mockups` directory. Click [here](./mockups/README.md) to see them.
+
+## Technical stack
+
+### Desktop application
+
+For the desktop application we will use [Qt](https://www.qt.io/) as it is a cross-platform framework that allows us to build a native application for Linux, MacOS and Windows. It allows us to build a GUI with a modern look and feel. We will use C++ as the programming language for the desktop application.
+
+Regarding the cryptography part, we will use [libsodium](https://libsodium.gitbook.io/doc/) as it is a well known and widely used library that provides a high level API for cryptography. It is also cross-platform and has a C++ wrapper.
+
+For the cryptographic algorithms, we chose:
+
+- [Argon2d](https://en.wikipedia.org/wiki/Argon2) as the key derivation function to derive the encryption key from the master password. It is a memory-hard function that is resistant to GPU attacks.
+- [HMAC-SHA512-256](https://en.wikipedia.org/wiki/HMAC) as the message authentication code to ensure the integrity of header of the vault file. It will require the use of the master password to verify the integrity of the vault file.
+- [XSalsa20](https://en.wikipedia.org/wiki/Salsa20#XSalsa20_with_192-bit_nonce) as the symmetric encryption algorithm to encrypt the vault file. It is a stream cipher that is fast and secure.
+- [Poly1305](https://en.wikipedia.org/wiki/Poly1305) as the message authentication code to ensure the integrity of the encrypted data inside the vault file.
+
+As testing framework we will use [QTest](https://doc.qt.io/qt-6/qtest-overview.html) as it is a unit testing framework that is integrated with Qt and allows us to write unit tests for our application.
+
+### Browser extension
+
+To develop the browser extension we will use Chrome Manifest v3 as it is the latest version of the Chrome extension manifest and it is required for new extensions. It also provides a more secure and performant architecture for extensions. We will use [TypeScript](https://www.typescriptlang.org/) as the programming language for the browser extension.
+
+We will use [Vitest](https://vitest.dev/) as the testing framework for the browser extension as it is a fast and lightweight testing framework.
+
+To communicate between the browser extension and the desktop application we will use [Native Messaging](https://developer.chrome.com/docs/apps/nativeMessaging/) as it is a secure way to communicate between a browser extension and a native application. It allows us to send messages between the two applications using standard input and output streams.
+
+### Core library
+
+To pull [libsodium](https://libsodium.gitbook.io/doc/) and compile it for the different platforms we will use vcpkg. It is a cross-platform package manager that allows us to easily manage our dependencies and build our project for different platforms.
