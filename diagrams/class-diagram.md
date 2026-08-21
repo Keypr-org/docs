@@ -75,5 +75,19 @@ sequenceDiagram
 ```mermaid
 sequenceDiagram
   GUI->>+VaultController: lockVault(...)
-  VaultController->>+VaultRepository: 
+  VaultController->>+VaultRepository: writeVaultSession(...)
+  VaultRepository->>+VaultSessionParser: serializeVaultSession(...)
+  VaultSessionParser-->>-VaultRepository: vaultBody
+  VaultRepository->>+CryptoService: encrypt(...)
+  CryptoService-->>-VaultRepository: ciphertext
+  VaultRepository->>+CryptoService: authenticate(...)
+  CryptoService-->>-VaultRepository: byte[]
+  VaultRepository->>+RawVault: RawVault()
+  RawVault-->>-VaultRepository: RawVault
+  VaultRepository->>+RawVaultParser: serializeRawVault(...)
+  RawVaultParser-->>-VaultRepository: Stream
+  VaultRepository->>+FileHandler: saveFile(...)
+  FileHandler-->>-VaultRepository: void
+  VaultRepository-->>-VaultController: void
+  VaultController-->>-GUI: void
 ```
