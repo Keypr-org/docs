@@ -42,11 +42,11 @@ Each task is related to one or more user story and has a defined priority and es
 
 The possible priority labels are:
 
-- **Critical**, must be done in the current sprint.
-- **Important**, should be done in the current sprint.
-- **Nice to have**, can be done in the current sprint if we have enough time.
+- **High**, must be done in the current sprint.
+- **Medium**, should be done in the current sprint.
+- **Low**, can be done in the current sprint if we have enough time.
 
-The tasks are managed using GitHub issues and are tracked in the [project KanBan](https://github.com/orgs/PDG-2026/projects/1) of the GitHub organization. There can only be one task per member in progress and in review meaning we must finish and review a task before starting a new one. This prevents team members from loosing focus by working on multiple things at once.
+The tasks are managed using GitHub issues and are tracked in the [project KanBan](https://github.com/orgs/Keypr-org/projects/1/) of the GitHub organization. There can only be one task per member in progress and in review meaning we must finish and review a task before starting a new one. This prevents team members from loosing focus by working on multiple things at once.
 
 ## Git workflow
 
