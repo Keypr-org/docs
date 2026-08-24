@@ -1,50 +1,120 @@
 # Diagrams
 
-## Class diagram
+## Class diagrams
+
+### `VaultRepository`
 
 ```mermaid
 classDiagram
     class VaultRepository{
-        +getVaultSession(String Masterpass, String filename): VaultSession
-        +writeVaultSession(VaultSession session):void
-        +createVault(String name, String filename, String masterpass):VaultSession
-        +vaultExists(String filename): bool
+        +getVaultSession(String Masterpass, String filename) VaultSession
+        +writeVaultSession(VaultSession session) void
+        +createVault(String name, String filename, String masterpass)VaultSession
+        +vaultExists(String filename) bool
     }
+```
+
+### `CryptoService`
+
+```mermaid
+classDiagram
     class CryptoService{
-        +deriveKey(byte[] masterpass, byte[] salt, int opLimits, int memoryLimit): byte[]
-        +authenticate(byte[] key, byte[] content): byte[]
-        +encrypt(byte[] key, byte[] plaintext): byte[]
-        +decrypt(byte[] key, byte[] ciphertext): String
+        +deriveKey(byte[] masterpass, byte[] salt, int opLimits, int memoryLimit) byte[]
+        +authenticate(byte[] key, byte[] content) byte[]
+        +encrypt(byte[] key, byte[] plaintext) byte[]
+        +decrypt(byte[] key, byte[] ciphertext) String
     }
+```
+
+### `FileHandler`
+
+```mermaid
+classDiagram
+    class FileHandler{
+      +saveFile(String filename, Stream content) void
+      +openFile(String filename) Stream
+      +fileExist(String filename) bool
+    }
+```
+
+### `VaultSession`
+
+```mermaid
+classDiagram
+    class VaultSession{
+      -cipherKey:byte[]
+      -authKey:byte[]
+      -filename:String
+      +getCategories() Categories
+      +parse(String vaultBody) VaultSession$
+      +serialize(VaultSession session) Stream$
+    }
+```
+
+### `VaultController`
+
+```mermaid
+classDiagram
+    class VaultController{
+      +session VaultSesssion
+      +openVault(String Masterpass, String filename) bool
+      +lockVault() void
+      +isVaultUnlocked() bool
+      +getVaultSession() const VaultSession&
+      +vaultExists(String filename) bool
+    }
+```
+
+### `RawVault`
+
+```mermaid
+classDiagram
+    class RawVault{
+      -header: VaultHeader
+      -headerMAC: byte[]
+      -xSalsa20Nonce: byte[]
+      -poly1305MAC: byte[]
+      -ciphertext:bytes[]
+
+      -RawVault(VaultHeader header, byte[] headerMAC, byte[] xSalsa20Nonce, byte[] poly1305MAC, bytes[] ciphertext)
+
+      +header() VaultHeader
+      +headerMAC() byte[]
+      +xSalsa20Nonce() byte[]
+      +poly1305MAC() byte[]
+      +ciphertext() bytes[]
+      +parse(Stream file) RawVault$
+      +serialize(RawVault rawVault) Stream$
+    }
+
+    class VaultHeader{
+      -magicBytes: String
+      -formatVersion: int
+      -argon2KDFSalt: byte[]
+      -argon2OpLimit: long long
+      -argon2MemLimit: long long
+
+      +VaultHeader(String magicBytes, int formatVersion, byte[] argon2KDFSalt, long long argon2OpLimit, long long argon2MemLimit)
+
+      +magicBytes() String
+      +formatVersion() int
+      +argon2KDFSalt() byte[]
+      +argon2OpLimit() long long
+      +argon2MemLimit() long long
+    }
+```
+
+---
+
+```mermaid
+classDiagram
     class RawVaultParser{
-      +parseRawVault(Stream file): RawVault
-      +serializeRawVault(RawVault vault):Stream
+      +parseRawVault(Stream file) RawVault
+      +serializeRawVault(RawVault vault) Stream
     }
     class VaultSessionParser{
-      +parseVaultSession(String vaultBody): VaultSession
-      +serializeVaultSession(VaultSession session): String
-    }
-    class VaultController{
-      +session: VaultSesssion
-      +openVault(String Masterpass, String filename): bool
-      +lockVault(): void
-      +isVaultUnlocked(): bool
-      +getVaultSession(): const VaultSession&
-      +vaultExists(String filename): bool
-    }
-    class VaultSession{
-      -key:byte[]
-      -filename:String
-      +getCategories(): Categories
-    }
-    class RawVault{
-      -header:string
-      -body:string
-    }
-    class FileHandler{
-      +saveFile(String filename, Stream content):void
-      +openFile(String filename): Stream
-      +fileExist(String filename):bool
+      +parseVaultSession(String vaultBody) VaultSession
+      +serializeVaultSession(VaultSession session) String
     }
 ```
 
