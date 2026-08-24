@@ -28,8 +28,12 @@ style: |
 1. Problem
 2. Solution
 3. Architecture
-4. Team organization
-5. Questions
+4. Technologies
+5. Dev process
+6. Git Workflow
+7. Mockups and landing page
+8. Pipeline and Demo
+9. Questions
 
 ---
 
