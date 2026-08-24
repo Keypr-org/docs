@@ -14,12 +14,12 @@
     - [Usability](#usability)
   - [Architecture](#architecture)
     - [Software architecture](#software-architecture)
-    - [Mail alias infrastructure](#mail-alias-infrastructure)
-  - [Mockups](#mockups)
+  - [Mockups / Landing page](#mockups--landing-page)
   - [Technical stack](#technical-stack)
     - [Desktop application](#desktop-application)
     - [Browser extension](#browser-extension)
     - [Core library](#core-library)
+    - [Email Aliasing](#email-aliasing)
 
 ## Objective
 
