@@ -17,12 +17,12 @@ At the end of the week we will have a sprint review where we will present the wo
 
 Each member will have the following role:
 
-| Member  | Role / Field of action |
-| ------- | ---------------------- |
-| Maikol  |                        |
-| Nolan   |                        |
-| Alberto |                        |
-| Pierre  |                        |
+| Member  | Role / Field of action                   |
+| ------- | ---------------------------------------- |
+| Maikol  | Qt client, IPC communication             |
+| Nolan   | Core                                     |
+| Alberto | Web browser extension, IPC communication |
+| Pierre  | Qt Client, email aliasing system         |
 
 ## Project structure
 
@@ -74,6 +74,7 @@ The commit message must follow the following convention:
 ```
 
 Where `[Type]` can be one of the following:
+
 - **[Feat]**: for new features
 - **[Fix]**: for bug fixes
 - **[Doc]**: for documentation changes

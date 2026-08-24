@@ -166,15 +166,6 @@ Mockups of our application are available in the `/mockups` directory. Click [her
 
 For the desktop application we will use [Qt](https://www.qt.io/) as it is a cross-platform framework that allows us to build a native application for Linux, MacOS and Windows. It allows us to build a GUI with a modern look and feel. We will use C++ as the programming language for the desktop application.
 
-Regarding the cryptography part, we will use [libsodium](https://libsodium.gitbook.io/doc/) as it is a well known and widely used library that provides a high level API for cryptography. It is also cross-platform and has a C++ wrapper.
-
-For the cryptographic algorithms, we chose:
-
-- [Argon2d](https://en.wikipedia.org/wiki/Argon2) as the key derivation function to derive the encryption key from the master password. It is a memory-hard function that is resistant to GPU attacks.
-- [HMAC-SHA512-256](https://en.wikipedia.org/wiki/HMAC) as the message authentication code to ensure the integrity of header of the vault file. It will require the use of the master password to verify the integrity of the vault file.
-- [XSalsa20](https://en.wikipedia.org/wiki/Salsa20#XSalsa20_with_192-bit_nonce) as the symmetric encryption algorithm to encrypt the vault file. It is a stream cipher that is fast and secure.
-- [Poly1305](https://en.wikipedia.org/wiki/Poly1305) as the message authentication code to ensure the integrity of the encrypted data inside the vault file.
-
 As testing framework we will use [QTest](https://doc.qt.io/qt-6/qtest-overview.html) as it is a unit testing framework that is integrated with Qt and allows us to write unit tests for our application.
 
 ### Browser extension
@@ -187,4 +178,25 @@ To communicate between the browser extension and the desktop application we will
 
 ### Core library
 
+The core library will be implemented using C++.
+
+Regarding the cryptography part, we will use [libsodium](https://libsodium.gitbook.io/doc/) as it is a well known and widely used library that provides a high level API for cryptography. It is also cross-platform and has a C++ wrapper.
+
+For the cryptographic algorithms, we chose:
+
+- [Argon2d](https://en.wikipedia.org/wiki/Argon2) as the key derivation function to derive the encryption key from the master password. It is a memory-hard function that is resistant to GPU attacks.
+- [HMAC-SHA512-256](https://en.wikipedia.org/wiki/HMAC) as the message authentication code to ensure the integrity of header of the vault file. It will require the use of the master password to verify the integrity of the vault file.
+- [XSalsa20](https://en.wikipedia.org/wiki/Salsa20#XSalsa20_with_192-bit_nonce) as the symmetric encryption algorithm to encrypt the vault file. It is a stream cipher that is fast and secure.
+- [Poly1305](https://en.wikipedia.org/wiki/Poly1305) as the message authentication code to ensure the integrity of the encrypted data inside the vault file.
+
 To pull [libsodium](https://libsodium.gitbook.io/doc/) and compile it for the different platforms we will use vcpkg. It is a cross-platform package manager that allows us to easily manage our dependencies and build our project for different platforms.
+
+To test the code we will use [Google Test](https://github.com/google/googletest) testing framework.
+
+### Email Aliasing
+
+The email aliasing system will be taken care of by the [PostScale API](https://postscale.io/products/masked-email-api). It provides an API to create and delete email aliases called _Masked Email_ and it has a free plan.
+
+The idea is that the user of our application can request its API key to poscale and add it to the app to take advantage of the email aliasing functionality.
+
+We'll by using [Dynu DNS](https://www.dynu.com/en-US) as a DNS provider for the domain of the email aliases as it is free and allows us to create a free DNS Zone.
