@@ -133,32 +133,11 @@ flowchart LR
     Repository --> VaultFile
 ```
 
-### Mail alias infrastructure
-
-```mermaid
-flowchart LR
-    Client["Password Manager Client"]
-
-    subgraph Server["Aliasing Server"]
-        API["Alias API"]
-        Mail["Mail Forwarder"]
-        Database[("Alias Database")]
-    end
-
-    Sender["External Sender"]
-    Inbox["User's Real Inbox"]
-
-    Client --> API
-    API --> Database
-
-    Sender --> Mail
-    Mail --> Database
-    Mail --> Inbox
-```
-
-## Mockups
+## Mockups / Landing page
 
 Mockups of our application are available in the `/mockups` directory. Click [here](./mockups/README.md) to see them.
+
+The landing page is available at [https://keypr-org.github.io/landing_page/](https://keypr-org.github.io/landing_page/)
 
 ## Technical stack
 
@@ -184,7 +163,7 @@ Regarding the cryptography part, we will use [libsodium](https://libsodium.gitbo
 
 For the cryptographic algorithms, we chose:
 
-- [Argon2d](https://en.wikipedia.org/wiki/Argon2) as the key derivation function to derive the encryption key from the master password. It is a memory-hard function that is resistant to GPU attacks.
+- [Argon2id](https://en.wikipedia.org/wiki/Argon2) as the key derivation function to derive the encryption key from the master password. It is a memory-hard function that is resistant to GPU attacks.
 - [HMAC-SHA512-256](https://en.wikipedia.org/wiki/HMAC) as the message authentication code to ensure the integrity of header of the vault file. It will require the use of the master password to verify the integrity of the vault file.
 - [XSalsa20](https://en.wikipedia.org/wiki/Salsa20#XSalsa20_with_192-bit_nonce) as the symmetric encryption algorithm to encrypt the vault file. It is a stream cipher that is fast and secure.
 - [Poly1305](https://en.wikipedia.org/wiki/Poly1305) as the message authentication code to ensure the integrity of the encrypted data inside the vault file.

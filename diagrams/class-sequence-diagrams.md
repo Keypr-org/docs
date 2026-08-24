@@ -9,7 +9,7 @@ classDiagram
     class VaultRepository{
         +getVaultSession(String Masterpass, String filename) VaultSession
         +writeVaultSession(VaultSession session) void
-        +createVault(String name, String filename, String masterpass)VaultSession
+        +createVault(String name, String filename, String masterpass) VaultSession
         +vaultExists(String filename) bool
     }
 ```
@@ -31,9 +31,9 @@ classDiagram
 ```mermaid
 classDiagram
     class FileHandler{
-      +saveFile(String filename, Stream content) void
-      +openFile(String filename) Stream
-      +fileExist(String filename) bool
+      +saveFileAtomically(String filename, Stream content) void$
+      +openFile(String filename, Mode filemode) Stream$
+      +fileExists(String filename) bool$
     }
 ```
 
@@ -118,7 +118,9 @@ classDiagram
     }
 ```
 
-## Unlock vault sequence
+## Sequence diagrams
+
+### Unlock vault sequence
 
 ```mermaid
 sequenceDiagram
@@ -126,38 +128,67 @@ sequenceDiagram
   VaultController->>+VaultRepository: getVaultSession(...)
   VaultRepository->>+FileHandler: openFile(...)
   FileHandler-->>-VaultRepository: FileStream
-  VaultRepository->>+RawVaultParser: parseRawVault(...)
-  RawVaultParser-->>-VaultRepository: RawVault
+  VaultRepository->>+RawVault: parse(...)
+  RawVault-->>-VaultRepository: RawVault
   VaultRepository->>+CryptoService: deriveKey(...)
   CryptoService-->>-VaultRepository: key
   VaultRepository->>+CryptoService: authenticate(...)
   CryptoService-->>-VaultRepository: bool
   VaultRepository->>+CryptoService: decrypt(...)
   CryptoService-->>-VaultRepository: vaultBody
-  VaultRepository->>+VaultSessionParser: parseVaultSession(...)
-  VaultSessionParser-->>-VaultRepository: VaultSession
+  VaultRepository->>+VaultSession: parse(...)
+  VaultSession-->>-VaultRepository: VaultSession
   VaultRepository-->>-VaultController: VaultSession
   VaultController-->>-GUI: bool
 ```
 
-## Lock vault sequence
+### Lock vault sequence
 
 ```mermaid
 sequenceDiagram
   GUI->>+VaultController: lockVault(...)
   VaultController->>+VaultRepository: writeVaultSession(...)
-  VaultRepository->>+VaultSessionParser: serializeVaultSession(...)
-  VaultSessionParser-->>-VaultRepository: vaultBody
+  VaultRepository->>+VaultSession: serialize(...)
+  VaultSession-->>-VaultRepository: vaultBody
   VaultRepository->>+CryptoService: encrypt(...)
   CryptoService-->>-VaultRepository: ciphertext
   VaultRepository->>+CryptoService: authenticate(...)
   CryptoService-->>-VaultRepository: byte[]
   VaultRepository->>+RawVault: RawVault()
   RawVault-->>-VaultRepository: RawVault
-  VaultRepository->>+RawVaultParser: serializeRawVault(...)
-  RawVaultParser-->>-VaultRepository: Stream
-  VaultRepository->>+FileHandler: saveFile(...)
+  VaultRepository->>+RawVault: serialize(...)
+  RawVault-->>-VaultRepository: Stream
+  VaultRepository->>+FileHandler: saveFileAtomically(...)
   FileHandler-->>-VaultRepository: void
   VaultRepository-->>-VaultController: void
   VaultController-->>-GUI: void
+```
+
+### Open a Vault
+
+```mermaid
+sequenceDiagram
+  GUI->>+VaultController: openVault(...)
+  VaultController->>+VaultRepository: vaultExists(...)
+  VaultRepository->>+FileHandler: FileExists(...)
+  FileHandler-->>-VaultRepository: bool
+
+  alt File doesn't exist
+    VaultRepository-->>VaultController: false
+    VaultController-->>GUI: File not found
+  else File exists
+    VaultRepository->>+FileHandler: openFile(...)
+    FileHandler-->>-VaultRepository: Stream
+
+    VaultRepository->>+RawVault: parse(...)
+    RawVault-->>-VaultRepository: void
+
+    alt Parsing fails
+      VaultRepository-->>VaultController: Parsing failed
+      VaultController-->>GUI: Invalid vault file
+    else Parsing succeeds
+      VaultRepository-->>-VaultController: true
+      VaultController-->>-GUI: Vault opened
+    end
+  end
 ```
