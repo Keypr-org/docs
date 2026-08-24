@@ -99,10 +99,12 @@ flowchart LR
 
 
     NativeHost["Native Messaging Host"]
+    API["Postscale API"]
 
     subgraph Desktop["Qt Client"]
         GUI["Qt GUI"]
         Controller["Vault Controller"]
+        MailController["Mail Alias Controller"]
         Session["Vault Session"]
         IPC["Local IPC Server"]
     end
@@ -123,6 +125,8 @@ flowchart LR
     IPC --> Controller
     Controller --> Session
     Controller --> Repository
+    Controller --> MailController
+    MailController --> API
 
     Repository --> Format
     Repository --> Crypto
