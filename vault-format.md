@@ -1,6 +1,6 @@
 # Vault file format specification
 
-This document describes how the *Keypr* vault format is structured. A vault is the file that contains the encrypted entries (website credentials, wifi credentials, credit card information, personas, email aliases). 
+This document describes how the _Keypr_ vault format is structured. A vault is the file that contains the encrypted entries (website credentials, wifi credentials, credit card information, personas, email aliases).
 
 This vault format is inspired of [keepass database format](https://keepass.info/help/kb/kdbx.html#xml).
 
@@ -16,13 +16,13 @@ In the whole document:
 
 Here's the overall structure of the vault file. Offsets are relative to the beginning of the file.
 
-| Offset | Size (in bytes) | Field                                                        |
-| ------ | --------------- | ------------------------------------------------------------ |
-| 0      | 68              | Header                                                       |
-| 68     | 32              | HMAC-SHA512-256 MAC of the header. Used to check if the header has been tampered with. Need the master password to check the integrity of the header. |
-| 100    | 24              | XSalsa20 Nonce                                               |
-| 124    | 16              | Poly1305 MAC authenticating the ciphertext                   |
-| 140    | -               | Ciphertext: Encrypted JSON document                          |
+| Offset | Size (in bytes) | Field                                                                                                                                                 |
+| ------ | --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0      | 60              | Header                                                                                                                                                |
+| 60     | 32              | HMAC-SHA512-256 MAC of the header. Used to check if the header has been tampered with. Need the master password to check the integrity of the header. |
+| 92     | 24              | XSalsa20 Nonce                                                                                                                                        |
+| 116    | 16              | Poly1305 MAC authenticating the ciphertext                                                                                                            |
+| 132    | -               | Ciphertext: Encrypted JSON document                                                                                                                   |
 
 ## Header
 
@@ -30,13 +30,13 @@ The header is unencrypted and contains all the necessary informations to decrypt
 
 Here's the structure of the header:
 
-| Offset | Size (in bytes) | Field |
-| --------------- | --------------- | --------------- |
-| 0 | 8 | Magic bytes to identify file type: "KVLT2026" |
-| 8 | 4 | Format version |
-| 12 | 32 | Argon2d KDF salt |
-| 44 | 8 | Argon2d Operations limit |
-| 52 | 8 | Argon2d Memory limit in bytes |
+| Offset | Size (in bytes) | Field                                         |
+| ------ | --------------- | --------------------------------------------- |
+| 0      | 8               | Magic bytes to identify file type: "KVLT2026" |
+| 8      | 4               | Format version                                |
+| 12     | 32              | Argon2d KDF salt                              |
+| 44     | 8               | Argon2d Operations limit                      |
+| 52     | 8               | Argon2d Memory limit in bytes                 |
 
 ## Vault JSON document structure
 
@@ -55,15 +55,15 @@ The JSON containing the entries has the following structure:
   "categories": [
     {
       "id": "cat-websites",
-      "name": "Website",
+      "name": "Website"
     },
     {
       "id": "cat-wifi",
-      "name": "Wi-Fi",
+      "name": "Wi-Fi"
     },
     {
       "id": "cat-credit-cards",
-      "name": "Credit card",
+      "name": "Credit card"
     }
   ],
   "entries": [],
