@@ -104,17 +104,120 @@ classDiagram
     }
 ```
 
----
-
 ```mermaid
 classDiagram
-    class RawVaultParser{
-      +parseRawVault(Stream file) RawVault
-      +serializeRawVault(RawVault vault) Stream
+    Entry <|-- Website
+    Entry <|-- CreditCard
+    Entry <|-- Wifi
+    DatedItem <|-- VaultSession
+    DatedItem <|-- Entry
+    DatedItem <|-- Persona
+    Item <|-- DatedItem
+    Item <|-- Category
+
+    class Item{
+        -snowflake_t id
+
+        +getId() snowflake_t
     }
-    class VaultSessionParser{
-      +parseVaultSession(String vaultBody) VaultSession
-      +serializeVaultSession(VaultSession session) String
+    class VaultSession {
+        -byte[] cipherKey
+        -byte[] authKey
+        -String name
+        -Category[] categories
+        -Persona[] personas
+
+        +getCipherKey() byte[]
+        +getAuthKey() byte[]
+        +getName() String
+        +getCategories() Category[]
+        +getPersonas() Persona[]
+    }
+    class Entry{
+        -String notes
+
+        +getNotes() String
+        +setNotes(String notes) void
+    }
+    class Website{
+        -String title
+        -String comments
+        -String username
+        -String password
+        -String url
+        -Persona persona
+        -String alias
+
+        +getTitle() String
+        +getComments() String
+        +getUsername() String
+        +getPassword() String
+        +getUrl() String
+        +getPersona() Persona
+        +getAlias() String
+        +setComments(String comments) void
+        +setUsername(String username) void
+        +setPassword(String password) void
+        +setUrl(String url) void
+        +setPersona(Persona persona) void
+        +setAlias(String alias) void
+    }
+    class Wifi{
+        -String networkName
+        -String password
+
+        +getNetworkName() String
+        +getPassword() String
+        +setNetworkName(String networkName) void
+        +setPassword(String password) void
+    }
+    class CreditCard{
+        -String cardHolderName
+        -String cardNumber
+        -String expiration
+        -String securityCode
+
+        +getCardHolderName() String
+        +getCardNumber() String
+        +getExpiration() String
+        +getSecurityCode() String
+        +setCardHolderName(String cardHolderName) void
+        +setCardNumber(String cardNumber) void
+        +setExpiration(String expiration) void
+        +setSecurityCode(String securityCode) void
+    }
+    class DatedItem{
+        -DateTime createdAt
+        -DateTime updatedAt
+
+        +getCreationDate() DateTime
+        +getLastUpdate() DateTime
+        +setLastUpdate(DateTime) void
+    }
+    class Persona{
+        -String firstName
+        -String lastName
+        -Date dateOfBirth
+        -String address
+        -String phone
+
+        +getFirstName() String
+        +getLastName() String
+        +getDateOfBirth() String
+        +getaddress() String
+        +getPhone() String
+        +setFirstName(String firstName) void
+        +setLastName(String lastName) void
+        +setDateOfBirth(Date dateOfBirth) void
+        +setaddress(String address) void
+        +setPhone(String phone) void
+    }
+    class Category {
+        -String name
+        -Entry[] entries
+
+        +getName() String
+        +getEntries() Entry[]
     }
 ```
 
