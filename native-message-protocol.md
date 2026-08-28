@@ -23,12 +23,10 @@ This document explains what the chrome extension sends and what it requires in r
     "entries": [
         {
             "id": 1,
-            "url": "https://example.com",
             "username": "Bob"
         },
         {
             "id": 2,
-            "url": "https://example.com",
             "username": "Alice"
         }
     ]
@@ -43,8 +41,6 @@ This document explains what the chrome extension sends and what it requires in r
 {
     "type": "GET_PASSWORD",
     "id": 1,
-    "url": "https://example.com",
-    "username": "Bob"
 }
 ```
 
@@ -53,9 +49,6 @@ This document explains what the chrome extension sends and what it requires in r
 ```json
 {
     "type": "PASSWORD",
-    "id": 1,
-    "url": "https://example.com",
-    "username": "Bob",
     "password": "example_password"
 }
 ```
