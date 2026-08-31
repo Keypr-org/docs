@@ -7,10 +7,10 @@
 ```mermaid
 classDiagram
     class VaultRepository{
-        +getVaultSession(String Masterpass, String filename) VaultSession
+        +vaultExists(String filename) bool
+        +unlockVault(String Masterpass, String filename) VaultSession
         +writeVaultSession(VaultSession session) void
         +createVault(String name, String filename, String masterpass) VaultSession
-        +vaultExists(String filename) bool
     }
 ```
 
@@ -225,24 +225,70 @@ classDiagram
 
 ### Unlock vault sequence
 
+User is supposed to have called `vaultExists` before calling `unlockVault`. If the vault file doesn't exist, the GUI will not call `unlockVault`.
+
 ```mermaid
 sequenceDiagram
   GUI->>+VaultController: openVault(...)
-  VaultController->>+VaultRepository: getVaultSession(...)
-  VaultRepository->>+FileHandler: openFile(...)
-  FileHandler-->>-VaultRepository: FileStream
-  VaultRepository->>+RawVault: parse(...)
-  RawVault-->>-VaultRepository: RawVault
-  VaultRepository->>+CryptoService: deriveKey(...)
-  CryptoService-->>-VaultRepository: key
-  VaultRepository->>+CryptoService: authenticate(...)
-  CryptoService-->>-VaultRepository: bool
-  VaultRepository->>+CryptoService: decrypt(...)
-  CryptoService-->>-VaultRepository: vaultBody
-  VaultRepository->>+VaultSession: parse(...)
-  VaultSession-->>-VaultRepository: VaultSession
-  VaultRepository-->>-VaultController: VaultSession
-  VaultController-->>-GUI: bool
+  VaultController->>+VaultRepository: unlockVault(...)
+
+  alt Vault file doesn't exist
+    VaultRepository-->>VaultController: FileNotFoundException
+    VaultController-->>GUI: Error unlocking vault
+
+  else Vault file exists
+    VaultRepository->>+FileHandler: readFile(...)
+    FileHandler-->>-VaultRepository: bytes[]
+
+    VaultRepository->>+RawVault: parse(...)
+
+    alt Parsing fails
+      RawVault-->>VaultRepository: ParseException
+      VaultRepository-->>VaultController: Error unlocking vault
+      VaultController-->>GUI: Error unlocking vault
+
+    else Parsing succeeds
+      RawVault-->>-VaultRepository: RawVault
+
+      VaultRepository->>+CryptoService: deriveKey(...)
+      CryptoService-->>-VaultRepository: key
+
+      VaultRepository->>+CryptoService: verify(...)
+
+      alt Verification fails
+        CryptoService-->>VaultRepository: false
+        VaultRepository-->>VaultController: Error unlocking vault
+        VaultController-->>GUI: Error unlocking vault
+
+      else Verification succeeds
+        CryptoService-->>-VaultRepository: true
+
+        VaultRepository->>+CryptoService: decrypt(...)
+
+        alt Decryption fails
+          CryptoService-->>VaultRepository: DecryptException
+          VaultRepository-->>VaultController: Error unlocking vault
+          VaultController-->>GUI: Error unlocking vault
+
+        else Decryption succeeds
+          CryptoService-->>-VaultRepository: vaultBody
+
+          VaultRepository->>+VaultSession: parse(...)
+
+          alt Parsing fails
+            VaultSession-->>VaultRepository: ParseException
+            VaultRepository-->>VaultController: Error unlocking vault
+            VaultController-->>GUI: Error unlocking vault
+
+          else Parsing succeeds
+            VaultSession-->>-VaultRepository: VaultSession
+            VaultRepository-->>-VaultController: VaultSession
+            VaultController-->>-GUI: Vault Opened
+          end
+        end
+      end
+    end
+  end
 ```
 
 ### Lock vault sequence
@@ -271,7 +317,7 @@ sequenceDiagram
 
 ```mermaid
 sequenceDiagram
-  GUI->>+VaultController: openVault(...)
+  GUI->>+VaultController: vaultExists(...)
   VaultController->>+VaultRepository: vaultExists(...)
   VaultRepository->>+FileHandler: FileExists(...)
   FileHandler-->>-VaultRepository: bool
@@ -287,11 +333,11 @@ sequenceDiagram
     RawVault-->>-VaultRepository: void
 
     alt Parsing fails
-      VaultRepository-->>VaultController: Parsing failed
+      VaultRepository-->>VaultController: false
       VaultController-->>GUI: Invalid vault file
     else Parsing succeeds
       VaultRepository-->>-VaultController: true
-      VaultController-->>-GUI: Vault opened
+      VaultController-->>-GUI: Valid Vault File
     end
   end
 ```
