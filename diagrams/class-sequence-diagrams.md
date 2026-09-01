@@ -9,8 +9,8 @@ classDiagram
     class VaultRepository{
         +vaultExists(String filename) bool
         +unlockVault(String Masterpass, String filename) VaultSession
-        +writeVaultSession(VaultSession session) void
-        +createVault(String name, String filename, String masterpass) VaultSession
+        +lockVault(String filename, VaultSession session) bool
+        +createVault(String name, String masterpass) VaultSession
     }
 ```
 
@@ -296,21 +296,42 @@ sequenceDiagram
 ```mermaid
 sequenceDiagram
   GUI->>+VaultController: lockVault(...)
-  VaultController->>+VaultRepository: writeVaultSession(...)
+  VaultController->>+VaultRepository: lockVault(...)
   VaultRepository->>+VaultSession: serialize(...)
-  VaultSession-->>-VaultRepository: vaultBody
-  VaultRepository->>+CryptoService: encrypt(...)
-  CryptoService-->>-VaultRepository: ciphertext
-  VaultRepository->>+CryptoService: authenticate(...)
-  CryptoService-->>-VaultRepository: byte[]
-  VaultRepository->>+RawVault: RawVault()
-  RawVault-->>-VaultRepository: RawVault
-  VaultRepository->>+RawVault: serialize(...)
-  RawVault-->>-VaultRepository: Stream
-  VaultRepository->>+FileHandler: saveFileAtomically(...)
-  FileHandler-->>-VaultRepository: void
-  VaultRepository-->>-VaultController: void
-  VaultController-->>-GUI: void
+  alt Serialization fails
+    VaultSession-->>VaultRepository: SerializeException
+    VaultRepository-->>VaultController: false
+    VaultController-->>GUI: Error locking vault
+
+  else Serialization succeeds
+    VaultSession-->>-VaultRepository: vaultBody
+    VaultRepository->>+CryptoService: encrypt(...)
+    CryptoService-->>-VaultRepository: ciphertext
+    VaultRepository->>+CryptoService: authenticate(...)
+    CryptoService-->>-VaultRepository: byte[]
+    VaultRepository->>+RawVault: RawVault()
+    RawVault-->>-VaultRepository: RawVault
+    VaultRepository->>+RawVault: serialize(...)
+    alt Serialization fails
+      RawVault-->>VaultRepository: SerializeException
+      VaultRepository-->>VaultController: false
+      VaultController-->>GUI: Error locking vault
+
+    else Serialization succeeds
+      RawVault-->>-VaultRepository: bytes[]
+      VaultRepository->>+FileHandler: saveFileAtomically(...)
+      alt Saving fails
+        FileHandler-->>VaultRepository: FileHandlerError
+        VaultRepository-->>VaultController: false
+        VaultController-->>GUI: Error locking vault
+
+      else Saving succeeds
+        FileHandler-->>-VaultRepository: void
+        VaultRepository-->>-VaultController: true
+        VaultController-->>-GUI: void
+      end
+    end
+  end
 ```
 
 ### Open a Vault
