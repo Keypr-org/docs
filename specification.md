@@ -105,12 +105,12 @@ flowchart LR
         GUI["Qt GUI"]
         Controller["Vault Controller"]
         MailController["Mail Alias Controller"]
-        Session["Vault Session"]
         IPC["Local IPC Server"]
     end
 
     subgraph Storage["Core"]
         Repository["Vault Repository"]
+        Session["Vault Session"]
         Format["Vault Format Parser / Serializer"]
         Crypto["Crypto Service"]
         VaultFile[("Encrypted Vault File")]
@@ -125,7 +125,7 @@ flowchart LR
     IPC --> Controller
     Controller --> Session
     Controller --> Repository
-    Controller --> MailController
+    GUI --> MailController
     MailController --> API
 
     Repository --> Format
