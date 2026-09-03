@@ -151,7 +151,7 @@ As testing framework we will use [QTest](https://doc.qt.io/qt-6/qtest-overview.h
 
 To develop the browser extension we will use Chrome Manifest v3 as it is the latest version of the Chrome extension manifest and it is required for new extensions. It also provides a more secure and performant architecture for extensions. We will use [TypeScript](https://www.typescriptlang.org/) as the programming language for the browser extension.
 
-We will use [Vitest](https://vitest.dev/) as the testing framework for the browser extension as it is a fast and lightweight testing framework.
+We will use [Vitest](https://vitest.dev/) as the testing framework for the browser extension as it is a fast and lightweight testing framework and [Vite](https://vite.dev/) to create a `js` bundle.
 
 To communicate between the browser extension and the desktop application we will use [Native Messaging](https://developer.chrome.com/docs/apps/nativeMessaging/) as it is a secure way to communicate between a browser extension and a native application. It allows us to send messages between the two applications using standard input and output streams.
 
