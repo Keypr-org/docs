@@ -22,11 +22,11 @@ This document explains what the chrome extension sends and what it requires in r
     "type": "ENTRIES",
     "entries": [
         {
-            "id": 1,
+            "id": "1",
             "username": "Bob"
         },
         {
-            "id": 2,
+            "id": "2",
             "username": "Alice"
         }
     ]
@@ -40,7 +40,7 @@ This document explains what the chrome extension sends and what it requires in r
 ```json
 {
     "type": "GET_PASSWORD",
-    "id": 1,
+    "id": "1",
 }
 ```
 
