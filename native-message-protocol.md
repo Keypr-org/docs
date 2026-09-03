@@ -52,3 +52,14 @@ This document explains what the chrome extension sends and what it requires in r
     "password": "example_password"
 }
 ```
+
+### Qt client throws an ERROR
+
+```json
+{
+    "type": "ERROR",
+    "code": "<error_type>"
+}
+```
+
+`<error_type>` can be an error telling that the vault is locked for example.
